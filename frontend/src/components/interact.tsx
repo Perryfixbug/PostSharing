@@ -40,7 +40,7 @@ const InteractPart = ({post_id, emotes, comments}:{post_id: number, emotes: [Emo
         <li className='text-sm font-light'>{emotes.length} Emotes</li>
         {/* <li className='text-sm font-light'>{comments.length} Comments</li> */}
       </ul>
-      <ul className='function-button flex justify-between'>
+      <ul className='function-button flex justify-between flex-wrap'>
           <li className='flex space-x-2 items-center rounded-sm relative group'>
             {!currenEmote && 
             <Button 
