@@ -1,0 +1,28 @@
+# ---- Python backend ----
+backend/__pycache__/
+backend/.venv/
+backend/env/
+backend/.env
+backend/.python-version
+backend/db.sqlite
+backend/uv.lock
+backend/migration/
+backend/.pytest_cache/
+backend/.mypy_cache/
+backend/.coverage
+backend/coverage.xml
+
+# ---- Node frontend ----
+frontend/node_modules/
+frontend/.next/
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.production.local
+frontend/next-env.d.ts
+frontend/.vercel/
+frontend/.clerk/
+
+# ---- Common ----
+*.log
+.DS_Store
+Thumbs.db
