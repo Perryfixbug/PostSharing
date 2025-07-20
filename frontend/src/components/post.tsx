@@ -18,7 +18,7 @@ const Post = ({post_data}: {post_data: PostType}) => {
                 <span className='create_date text-[12px] font-thin'>{(new Date(post_data.create_date)).toLocaleDateString()}</span>
               </div>
           </div>
-          <Option owner_id={post_data.user_id}/>
+          {/* <Option post_data={post_data}/> */}
         </div>
         <div className='main_content flex flex-col'>
           <span className='text-3xl font-bold'>#{post_data.title}</span>
