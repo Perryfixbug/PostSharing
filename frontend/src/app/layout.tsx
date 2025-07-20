@@ -46,7 +46,7 @@ export default function RootLayout({
                     <RightSide />
                   </main>
                   <Toaster 
-                      closeButton 
+                      closeButton
                       visibleToasts={3}
                       duration={8000}
                   />
