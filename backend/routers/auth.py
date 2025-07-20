@@ -91,11 +91,11 @@ async def refresh_access_token(
     rf_token = session.exec(select(RefreshToken).where(RefreshToken.refresh_token == token)).first()
 
     if not rf_token:
-        raise HTTPException(status_code=400, detail="Expired token")
+        raise HTTPException(status_code=401, detail="Expired session")
 
     user_id = decode_token(rf_token.refresh_token).get("sub")
     if not user_id:
-        raise HTTPException(status_code=400, detail="Invalid token")
+        raise HTTPException(status_code=401, detail="Invalid token")
 
     access_token = create_access_token({"sub": str(user_id)})
     response.set_cookie(

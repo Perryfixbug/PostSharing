@@ -11,8 +11,14 @@ class Post(PostBase, table=True):
     id: int = Field(primary_key=True)
     user: "User" = Relationship(back_populates="posts")
     create_date: date
-    comments: list["Comment"] = Relationship(back_populates="post")
-    emotes: list["Emote"] = Relationship(back_populates="post")
+    comments: list["Comment"] = Relationship(
+        back_populates="post",
+        sa_relationship_kwargs={"cascade": "all, delete-orphan"}
+    )
+    emotes: list["Emote"] = Relationship(
+        back_populates="post",
+        sa_relationship_kwargs={"cascade": "all, delete-orphan"}
+    )
 
 class PostRead(PostBase):
     id: int
@@ -35,7 +41,6 @@ class PostCreate(PostBase):
 class PostUpdate(PostBase):
     title: str | None = None
     content: str | None = None
-    user_id: None = None
 
 
 from .users import User, UserRead

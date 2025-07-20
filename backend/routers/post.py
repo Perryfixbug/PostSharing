@@ -29,7 +29,7 @@ async def get_post(
 async def create_post(
     post_data: PostCreate,
     session: Session = Depends(get_session)
-)-> Post:
+)-> PostRead:
     post = Post(
         title=post_data.title, 
         content=post_data.content, 
@@ -46,7 +46,7 @@ async def update_post(
     post_id: int,
     post_data: PostUpdate,
     session: Session = Depends(get_session)
-) -> Post:
+) -> PostRead:
     post = session.get(Post, post_id)
 
     if not post:
@@ -65,13 +65,13 @@ async def update_post(
 async def delete_post(
     post_id: int,
     session: Session = Depends(get_session)
-) -> Post:
+):
     post = session.get(Post, post_id)
     if not post:
         raise HTTPException(status_code=404, detail="Post not found")
     session.delete(post)
     session.commit()
-    return post
+    return {"msg": "Delete post successfully!"}
 
 @router.get('/user/{user_id}')
 async def get_post_by_user_id(
