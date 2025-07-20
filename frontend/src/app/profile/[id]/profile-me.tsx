@@ -1,5 +1,6 @@
 "use client"
 import InteractPart from '@/components/interact'
+import Option from '@/components/option'
 import Post from '@/components/post'
 import { SkeletonProfile } from '@/components/skeletons'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -59,6 +60,7 @@ const EditDialog = ()=>{
                 payload.avatar = fileUrl
             } //Up len cloud
             const resData = await fetchAPI(`/user/${userInfo.id}`, "PUT", payload)
+            toast.success("You just have updated your profile", {"description": "Check it now!"})
             setUserInfo(resData)
         }catch(e){
             console.log(e)
@@ -69,9 +71,9 @@ const EditDialog = ()=>{
     }
 
     useEffect(() => {
-    if (userInfo) {
-        reset(userInfo);
-    }
+        if (userInfo) {
+            reset(userInfo);
+        }
     }, [userInfo, reset]);
 
     return(
@@ -261,8 +263,9 @@ const ProfileMe = () => {
         <div className='flex flex-col gap-2'>
           <span className='text-2xl font-bold'>Posted</span>
           {userPosts && userPosts.map((post: PostType)=>
-              <div key={post.id} className='flex flex-col bg-primary rounded-md p-5'>
+              <div key={post.id} className='flex flex-col bg-primary rounded-md p-5 relative'>
                 <Post post_data={post}/>
+                <Option post_data={post} setUserPosts={setUserPosts}/>
                 <InteractPart post_id={post.id} emotes={post?.emotes} comments={post?.comments}/>
                 {/* <CommentPart post_id={post_data.id} post_user_id={post_data.user_id}/> */}
                 <Link 

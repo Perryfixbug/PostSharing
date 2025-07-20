@@ -4,6 +4,7 @@ import { fetchAPI } from "@/lib/api";
 import { useRouter } from 'next/navigation'
 import { UserType } from "@/type/type";
 import { useLoading } from "@/context/loadingContext";
+import { toast } from "sonner";
 
 export const AuthContext = createContext<any>(null);
 export const useAuth = () => useContext(AuthContext)
@@ -17,14 +18,19 @@ export default function AuthProvider({children}: {children: React.ReactNode}){
     const login = async (email: string, password: string)=>{
         setAuthLoading(true)
         try{
-            await fetchAPI('/auth/login', 'POST', {email, password})
+            const data = await fetchAPI('/auth/login', 'POST', {email, password})
             const user  = await fetchAPI("/user/me", "GET")
             setUserInfo(user)
             setIsAuth(true)
             replace('/')
-        }catch(e){
+        }catch(err){
             setIsAuth(false)
             setUserInfo(undefined)
+            if (err instanceof Error) {
+                toast.error(err.message);
+            } else {
+                toast.error(String(err));
+            }
         }finally{
             setAuthLoading(false)
         }
@@ -52,7 +58,6 @@ export default function AuthProvider({children}: {children: React.ReactNode}){
                     setUserInfo(undefined)
                 }
             } catch (err) {
-                console.error("Auto refresh failed", err);
                 setIsAuth(false)
                 setUserInfo(undefined)
             }finally{

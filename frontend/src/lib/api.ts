@@ -11,9 +11,9 @@ const fetchAPI = async (url: string, method="GET", body?: any) =>{
       body: body && method !== 'GET' ? JSON.stringify(body): undefined
     });
 
-    if (response.status === 400 && url !== '/auth/refresh') {
+    if (response.status === 401 && url !== '/auth/refresh') {
       const refreshResponse = await fetch(`${URL}/auth/refresh`, {
-        method: "POST", // ⚠️ refresh phải là POST
+        method: "POST", 
         credentials: 'include',
       });
 
@@ -21,14 +21,20 @@ const fetchAPI = async (url: string, method="GET", body?: any) =>{
         // Thử lại request ban đầu
         return fetchAPI(url, method, body);
       } else {
-        throw new Error("Refresh token failed. User should re-login.");
+        // throw new Error("Refresh token failed. User should re-login.");
+        // const errorResponse = await response.json();
+        // throw new Error(errorResponse.detail || "Refresh token failed. User should re-login.");
       }
     }
-    
+
+    if(!response.ok ){
+      const errorResponse = await response.json();
+      throw new Error(errorResponse.detail || "Some error");
+    }
+
     return await response.json()
-  } catch (err) {
-    console.error("fetchAPI error:", err);
-    throw err;
+  } catch (err: any) {
+    if(err?.status != 401) throw err;
   }
 }
 

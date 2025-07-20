@@ -21,13 +21,14 @@ const FriendPage = () => {
   const { isAuth } = useAuth()
 
   useEffect(()=>{
+    if(!isAuth) return
     const fetchFriends = async ()=>{
       const data = await fetchAPI(`/friendship/?type=${type}`)
       setSearchResult(data)
       console.log(data)
     }
     fetchFriends()
-  },[type])
+  },[type, isAuth])
 
   return isAuth ? (
     <div className='container flex flex-col py-5 px-10 space-y-2 bg-primary rounded-md'>

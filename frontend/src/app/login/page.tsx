@@ -2,6 +2,7 @@
 import { Input } from '@/components/ui/input'
 import { useAuth } from '@/context/authContext'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 
 type FormValues={
   email: string,
@@ -17,7 +18,6 @@ export default function Login() {
       await login(data.email, data.password)
       reset()
     }catch(e){
-      console.log(e);
     }
 
   }
