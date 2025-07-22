@@ -18,8 +18,12 @@ const fontSans = FontSans({
 
 
 export const metadata: Metadata = {
-  title: "PostSharing",
-  description: "Social media",
+  title: "QuacQuac - Share everything excited",
+  description: "Social media sharing post, chat, excited story",
+  icons: {
+    icon: '/duck-svgrepo-com.svg',
+    shortcut: '/duck-svgrepo-com.svg'
+  }
 };
 
 export default function RootLayout({

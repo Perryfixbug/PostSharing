@@ -4,7 +4,6 @@ import ProfileMeButton from '@/components/profile-me-button'
 
 
 const NavigationMenu = () => {
-  
   return (
     <div className='hidden md:flex flex-col gap-2 p-8 fixed left-0 h-full w-1/4'> 
       <Link href='/' className="logo text-4xl font-extrabold text-accent">QuacQuac</Link>

@@ -11,6 +11,7 @@ import { toast } from 'sonner'
 import {useRouter} from 'next/navigation'
 import { useLoading } from '@/context/loadingContext'
 import { SkeletonCreate } from '@/components/skeletons'
+import AuthFirst from '@/components/auth-first'
 
 type FormValues = {
   title: string,
@@ -37,7 +38,7 @@ const Create = () => {
     <div className='container flex flex-col bg-primary py-5 px-10 space-y-2 rounded-md'>
       <div className="info container flex gap-2 items-center">
           <Avatar>
-              <AvatarImage src={"https://th.bing.com/th/id/OIP.2zRPW8EmVj42E7q51w8wvAHaFV?w=234&h=180&c=7&r=0&o=7&dpr=1.4&pid=1.7&rm=3"} />
+              <AvatarImage src={userInfo?.avatar} />
               <AvatarFallback>{userInfo?.fullname}</AvatarFallback>
           </Avatar>
           <span className='text-3xl font-bold'>{userInfo?.fullname}</span>
@@ -63,7 +64,7 @@ const Create = () => {
         >Post</Button>
       </form>
     </div>
-  ) : <p>You should Login First</p>
+  ) : <AuthFirst />
 }
 
 export default Create

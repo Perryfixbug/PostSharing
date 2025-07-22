@@ -11,6 +11,7 @@ import React, { useEffect, useState } from 'react'
 import User from '@/components/user'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/context/authContext'
+import AuthFirst from '@/components/auth-first'
 
 const FriendPage = () => {
   const [type, setType] = useState("pending")
@@ -69,7 +70,7 @@ const FriendPage = () => {
       }
       
     </div>
-  ) : <div>You should login first</div>
+  ) : <AuthFirst />
 }
 
 export default FriendPage
