@@ -51,7 +51,7 @@ async def get_user_chatted_with(
             and_(Message.sender_id == user_id, Message.receiver_id == partner_id),
             and_(Message.sender_id == partner_id, Message.receiver_id == user_id),
         )
-    ).order_by(Message.create_date.asc()).offset(offset).limit(limit)
+    ).order_by(Message.create_date.desc()).offset(offset).limit(limit)
 
     messages = session.exec(statement).all()
     return messages

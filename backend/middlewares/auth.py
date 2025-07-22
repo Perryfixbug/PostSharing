@@ -4,7 +4,7 @@ from jose import JWTError
 
 def get_current_user_id(request: Request)->int:
     token = request.cookies.get("access_token")
-    print("access_token",token)
+
     if not token:
         raise HTTPException(status_code=401, detail="Access token missing")
 

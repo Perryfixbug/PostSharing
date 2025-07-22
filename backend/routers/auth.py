@@ -4,7 +4,8 @@ from backend.models.users import User, UserLogin, UserRead, UserRegister
 from backend.models.token import RefreshToken
 from backend.db import get_session
 from sqlmodel import Session, select, or_
-from backend.lib.token import create_access_token, create_refresh_token, decode_token
+from backend.lib.token import create_access_token, create_refresh_token, decode_token, hash_password
+from backend.middlewares.auth import get_current_user_id
 
 router = APIRouter(
     prefix="/auth",
@@ -17,7 +18,7 @@ async def login(
     login_data: UserLogin,
     session: Session = Depends(get_session)
 ):
-    statement = select(User).where(User.email == login_data.email, User.password == login_data.password)
+    statement = select(User).where(User.email == login_data.email, User.password == hash_password(login_data.password))
     user = session.exec(statement).first()
     if not user:
         raise HTTPException(status_code=400, detail="Wrong email or password")
@@ -53,8 +54,6 @@ async def login(
         # path='/'         
 
     )
-    print("==== HEADERS ====")
-    print(response.headers)
 
     return {"message": "Login successfully"}
 
@@ -72,7 +71,7 @@ async def register(
         fullname=register_data.fullname,
         phone=register_data.phone,
         email=register_data.email,
-        password=register_data.password
+        password=hash_password(register_data.password)
     )
     session.add(user)
     session.commit()
@@ -147,3 +146,31 @@ async def refresh_access_token(
 )->dict:
     print(request.cookies)
     return {"cookie": request.cookies.get("refresh_token")}
+
+@router.post('/password/change')
+async def change_password(
+    request: Request,
+    session: Session = Depends(get_session),
+    user_id: int = Depends(get_current_user_id)
+):
+    data = await request.json()
+    old_pass = data["old_password"]
+    new_pass = data["new_password"]
+    rewrite_pass = data["rewrite_password"] 
+
+    user = session.get(User, user_id)
+    if not user:
+        raise HTTPException(status_code=401, detail="User not found")
+
+    if hash_password(old_pass) != user.password:
+        raise HTTPException(status_code=400, detail="Wrong password")
+    
+    if new_pass != rewrite_pass:
+        raise HTTPException(status_code=400, detail="New password not the same")
+
+    user.password = hash_password(new_pass)
+    session.add(user)
+    session.commit()
+    session.refresh(user)
+
+    return {"message": "Change password success"}

@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 from jose import jwt
+import hashlib
 from dotenv import load_dotenv
 import os
 
@@ -23,3 +24,6 @@ def create_refresh_token(data: dict, expires_delta=timedelta(days=1)):
 def decode_token(token: str)->dict:
     payload = jwt.decode(token, SECRET_KEY, ALGORITHM)
     return payload
+
+def hash_password(password: str) -> str:
+    return hashlib.sha256(password.encode()).hexdigest()
