@@ -31,7 +31,7 @@ export default function ChatProvider({children}: {children: React.ReactNode}){
                     const message = await fetchAPI(`/message/${partner.id}`, "GET");
                     return [
                         partner.id,
-                        message
+                        message.reverse()
                     ]
                     })
                 );

@@ -23,20 +23,23 @@ const Menu = () => {
         <UserDialog option={option} setOption={setOption} />
       </div>
       :<div className='login-menu flex justify-end gap-2 items-center relative' >
+        <ThemeSwitcher />
         <Button 
+          // id='login-button'
           className='rounded-full' 
           variant={"default"} 
           onClick={()=>push('/login')}
         >
           Login
         </Button>
-        <Button 
+        {/* <Button 
+
           className='rounded-full'  
           variant={"default"}
           onClick={()=>push('/signup')}
         >
           Register
-        </Button>
+        </Button> */}
       </div>  
     }
         

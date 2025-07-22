@@ -37,7 +37,10 @@ const UserDialog = ({option, setOption}: {option: string, setOption: any}) => {
             <Button 
               variant={"ghost"} 
               className='rounded-full'
-              onClick={()=>{push('/profile/me')}}
+              onClick={()=>{
+                push('/profile/me')
+                setOption("")
+              }}
             >
               <User />
               To Profile
@@ -46,7 +49,10 @@ const UserDialog = ({option, setOption}: {option: string, setOption: any}) => {
             <Button 
               variant={"ghost"} 
               className='rounded-full'
-              onClick={()=>{}}
+              onClick={()=>{
+                push('/setting')
+                setOption("")
+              }}
             >
               <Settings />
               Setting

@@ -39,15 +39,15 @@ const PreviewChat = ({partner, historyChat, setChatUsers}: {partner: UserType, h
           <AvatarImage src={partner?.avatar || undefined}/>
           <AvatarFallback>{aliasFullname(partner.fullname)}</AvatarFallback>
         </Avatar>
-        { !hasUnreadMessage?
+        { !hasUnreadMessage || historyChat[historyChat.length - 1]?.sender_id != partner.id ?
           <div>
             <span className='font-bold'>{partner.fullname}</span>
-            <p>{isYou ? "you: ":""}{historyChat[historyChat.length - 1]?.content}</p>
+            <p>{isYou ? "you: ": ""}{historyChat[historyChat.length - 1]?.content}</p>
           </div>
           :
           <div>
             <span className='font-extrabold'>{partner.fullname}</span>
-            <p className='font-medium'>{isYou ? "you: ":""}{historyChat[historyChat.length - 1]?.content}</p>
+            <p className='font-medium'>{isYou ? "you: ": ""}{historyChat[historyChat.length - 1]?.content}</p>
             <CircleSmall className='absolute right-0 top-1/3 rounded-full' color='blue' fill='blue' size={15}/>
           </div>
         }
@@ -146,7 +146,7 @@ const ChatDialog = ({option, setOption}: {option: string, setOption: any}) => {
 
     partners.forEach((partner: UserType) => {
       const history = allHistoryChat.get(partner.id) || [];
-      unreadCount += history.some((msg: MessageType) => !msg.is_read) ? 1 : 0;
+      unreadCount += history.some((msg: MessageType) => !msg.is_read && msg.sender_id == partner.id) ? 1 : 0;
     });
 
     setNewMessageCount(unreadCount);
@@ -162,7 +162,7 @@ const ChatDialog = ({option, setOption}: {option: string, setOption: any}) => {
         const history = allHistoryChat.get(userId);
         if (!history) return;
 
-        const unreadMessages = history.filter((chat: MessageType) => !chat.is_read);
+        const unreadMessages = history.filter((chat: MessageType) => !chat.is_read && chat.sender_id == userId);
         if (unreadMessages.length === 0) return;
 
         unreadMessages.forEach((chat: MessageType) => {
