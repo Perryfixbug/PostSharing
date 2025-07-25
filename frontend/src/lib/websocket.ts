@@ -16,12 +16,11 @@ export const connectWs = (
       const payload = JSON.parse(event.data);
       if (payload.type === 'message') {
         const message = payload.data;
-        console.log('Message received:', message);
         onMessage(message); // GỌI CALLBACK ĐÃ TRUYỀN
       }
       if (payload.type === 'noti') {
         const noti = payload.data;
-        console.log('Noti received:', noti);
+        
         onNoti(noti); // GỌI CALLBACK ĐÃ TRUYỀN
       }
     } catch (err) {
