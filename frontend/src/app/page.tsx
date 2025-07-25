@@ -6,7 +6,12 @@ import { PostType } from '@/type/type';
 import Link from 'next/link';
 
 export default async function Home() {
-  const allPosts = await fetchAPI('/post', 'GET');
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post`, {
+    method: 'GET',
+    cache: 'no-store', // <- Vô hiệu hóa cache
+  });
+
+  const allPosts = await res.json();
 
   return (
     <div className="container flex flex-col gap-3">
