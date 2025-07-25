@@ -1,5 +1,5 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 @layer theme, base, clerk, components, utilities;
@@ -46,7 +46,7 @@
 
 :root {
   --radius: 0.625rem;
-  --background: #F2F4F7;
+  --background: #f2f4f7;
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
@@ -55,12 +55,12 @@
   --primary: oklch(1 0 0);
   --primary-foreground: oklch(0% 0 0);
   --secondary: #4f39f6;
-  --secondary-foreground: #FFFFFF;
+  --secondary-foreground: #ffffff;
   --muted: oklch(94.611% 0.00011 271.152 / 0.937);
   --muted-foreground: oklch(0.205 0 0);
-  --accent: #FF894F;
-  --accent-foreground: #FFFFFF;
-  --destructive: #F2613F;
+  --accent: #ff894f;
+  --accent-foreground: #ffffff;
+  --destructive: #f2613f;
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
@@ -89,12 +89,12 @@
   --primary: oklch(23.503% 0.00003 271.152);
   --primary-foreground: oklch(100% 0.00011 271.152);
   --secondary: #4f39f6;
-  --secondary-foreground: #FFFFFF;
+  --secondary-foreground: #ffffff;
   --muted: oklch(38.288% 0.00004 271.152);
   --muted-foreground: oklch(0.985 0 0);
-  --accent: #FF894F;
-  --accent-foreground: #FFFFFF;
-  --destructive: #F2613F;
+  --accent: #ff894f;
+  --accent-foreground: #ffffff;
+  --destructive: #f2613f;
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.556 0 0);
@@ -127,7 +127,7 @@
   transition: color;
 } */
 
-.loading{
+.loading {
   display: flex;
   justify-content: center;
   align-items: center;

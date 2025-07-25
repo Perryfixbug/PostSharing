@@ -1,45 +1,51 @@
-"use client"
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { fetchAPI } from "@/lib/api";
-import { UserType } from "@/type/type";
-import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
+'use client';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { fetchAPI } from '@/lib/api';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 
 type FormValues = {
-  fullname: string,
-  email: string,
-  phone: string,
-  password: string
-}
+  fullname: string;
+  email: string;
+  phone: string;
+  password: string;
+};
 
 export default function SignUp() {
-  const {register, handleSubmit, reset} = useForm<FormValues>()
-  const router = useRouter()
+  const { register, handleSubmit, reset } = useForm<FormValues>();
+  const router = useRouter();
 
-  const onsubmit = async (data: FormValues)=>{
-    try{
-      await fetchAPI("/auth/register", "POST", 
-      {
-        fullname: data.fullname, 
+  const onsubmit = async (data: FormValues) => {
+    try {
+      await fetchAPI('/auth/register', 'POST', {
+        fullname: data.fullname,
         email: data.email,
         password: data.password,
-        phone: data.phone
-      })
-      reset()
-      router.replace('/login')
-    }catch(e){
-      console.log(e)
+        phone: data.phone,
+      });
+      reset();
+      router.replace('/login');
+    } catch (err) {
+      if (err instanceof Error) {
+        toast.error(err.message);
+      } else {
+        toast.error(String(err));
+      }
     }
-  }
+  };
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <img
+          <Image
             alt="Your Company"
             src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
             className="mx-auto h-10 w-auto"
+            width={10}
+            height={10}
           />
           <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-secondary">
             Sign in to your account
@@ -55,7 +61,7 @@ export default function SignUp() {
               <Input
                 id="fullname"
                 type="input"
-                {...register("fullname", {required: "Fullname is required"})}
+                {...register('fullname', { required: 'Fullname is required' })}
                 autoComplete="fullname"
               />
             </div>
@@ -67,10 +73,9 @@ export default function SignUp() {
               <Input
                 id="email"
                 type="email"
-                {...register("email", {required: "Email is required"})}
+                {...register('email', { required: 'Email is required' })}
                 autoComplete="email"
               />
-      
             </div>
 
             <div className="flex flex-col items-start">
@@ -80,13 +85,11 @@ export default function SignUp() {
               <Input
                 id="phone"
                 type="phone"
-                {...register("phone", {required: "phone is required"})}
+                {...register('phone', { required: 'phone is required' })}
                 autoComplete="phone"
               />
-      
             </div>
 
-            
             <div className="flex flex-col items-start">
               <label htmlFor="password" className="block text-sm/6 font-medium text-secondary">
                 Password
@@ -94,10 +97,9 @@ export default function SignUp() {
               <Input
                 id="password"
                 type="password"
-                {...register("password", {required: "Password is required"})}
+                {...register('password', { required: 'Password is required' })}
                 autoComplete="password"
               />
-     
             </div>
 
             <div>
@@ -119,5 +121,5 @@ export default function SignUp() {
         </div>
       </div>
     </>
-  )
+  );
 }

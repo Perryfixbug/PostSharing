@@ -1,19 +1,19 @@
-const URL = process.env.NEXT_PUBLIC_API_URL
+const URL = process.env.NEXT_PUBLIC_API_URL;
 
-const fetchAPI = async (url: string, method="GET", body?: any) =>{
-  try{
+const fetchAPI = async (url: string, method = 'GET', body?: any) => {
+  try {
     const response = await fetch(`${URL}${url}`, {
       method,
       credentials: 'include', //Send cookies
       headers: {
         'Content-Type': 'application/json',
-      }, 
-      body: body && method !== 'GET' ? JSON.stringify(body): undefined
+      },
+      body: body && method !== 'GET' ? JSON.stringify(body) : undefined,
     });
 
     if (response.status === 401 && url !== '/auth/refresh') {
       const refreshResponse = await fetch(`${URL}/auth/refresh`, {
-        method: "POST", 
+        method: 'POST',
         credentials: 'include',
       });
 
@@ -27,16 +27,15 @@ const fetchAPI = async (url: string, method="GET", body?: any) =>{
       }
     }
 
-    if(!response.ok ){
+    if (!response.ok) {
       const errorResponse = await response.json();
-      throw new Error(errorResponse.detail || "Some error");
+      throw new Error(errorResponse.detail || 'Some error');
     }
 
-    return await response.json()
+    return await response.json();
   } catch (err: any) {
-    if(err?.status != 401) throw err;
+    if (err?.status != 401) throw err;
   }
-}
+};
 
-export {fetchAPI}
-
+export { fetchAPI };

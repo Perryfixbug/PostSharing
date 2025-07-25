@@ -1,6 +1,5 @@
-import { NextRequest, NextResponse } from "next/server"
-
+// import { NextRequest, NextResponse } from "next/server"
 
 export const config = {
-  matcher: []
-}
+  matcher: [],
+};
