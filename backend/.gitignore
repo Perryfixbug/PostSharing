@@ -13,7 +13,7 @@ wheels/
 api.http
 
 # Alembic migration cache
-alembic.ini
+# alembic.ini
 migration/versions/*.pyc
 *.egg-info/
 dist/
