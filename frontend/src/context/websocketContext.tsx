@@ -19,7 +19,7 @@ export default function SocketProvider({ children }: { children: React.ReactNode
   useEffect(() => {
     if (authLoading || !isAuth) return;
     connectWs(
-      `/wss/${userInfo.id}`,  
+      `/ws/${userInfo.id}`,  
       (msg: MessageType) => {
         const partnerId = msg.sender_id === userInfo.id ? msg.receiver_id : msg.sender_id;
 
