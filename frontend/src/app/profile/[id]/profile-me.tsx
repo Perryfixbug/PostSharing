@@ -1,4 +1,5 @@
 'use client';
+import ImageCropper from '@/components/image-croper';
 import InteractPart from '@/components/interact';
 import Option from '@/components/option';
 import Post from '@/components/post';
@@ -35,6 +36,7 @@ const EditDialog = () => {
   const [editing, setEditing] = useState('');
   const [preview, setPreview] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
+  const [croppingFile, setCroppingFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [openDialog, setOpenDialog] = useState(false);
   const [loadingSubmit, setLoadingSubmit] = useState(false);
@@ -42,10 +44,15 @@ const EditDialog = () => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
     if (selectedFile) {
-      setFile(selectedFile);
-      const previewUrl = URL.createObjectURL(selectedFile);
-      setPreview(previewUrl);
+      setCroppingFile(selectedFile); //Open crop
     }
+  };
+
+  const handleCropped = (croppedFile: File) => {
+    setFile(croppedFile); //Set crop
+    const previewUrl = URL.createObjectURL(croppedFile);
+    setPreview(previewUrl);
+    setCroppingFile(null);
   };
 
   const onsubmit = async (data: UserType) => {
@@ -93,6 +100,8 @@ const EditDialog = () => {
           reset(userInfo);
           setEditing('');
           setPreview(null);
+          setFile(null);
+          setCroppingFile(null);
         }
       }}
     >
@@ -124,6 +133,7 @@ const EditDialog = () => {
               ref={fileInputRef}
               className="hidden"
             />
+            {croppingFile && <ImageCropper file={croppingFile} onDone={handleCropped} onCancel={()=>{setCroppingFile(null)}}/>}
             <Pen
               size={20}
               className="absolute top-0 right-0 z-50"
