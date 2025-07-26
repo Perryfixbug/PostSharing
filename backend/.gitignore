@@ -37,3 +37,7 @@ api_request/
 *.tmp
 
 .vscode/
+
+#.env
+.env
+env/

@@ -12,11 +12,11 @@ router = APIRouter(
 
 @router.get('/')
 async def get_post(
-    limit: int = Query(10, ge=1),
+    limit: int = Query(20, ge=1),
     offset: int = Query(0, ge=0),
     session: Session = Depends(get_session)
 ) -> list[PostRead]:
-    statment = select(Post).offset(offset).limit(limit)
+    statment = select(Post).order_by(Post.create_date.desc()).offset(offset).limit(limit)
     posts = session.exec(statment).all()
     # for post in posts:
     #     number_of_cmts = session.exec(
