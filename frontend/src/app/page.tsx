@@ -12,7 +12,7 @@ export default async function Home() {
     <div className="container flex flex-col gap-3">
       {allPosts.length != 0 &&
         allPosts.map((post_data: PostType) => (
-          <div key={post_data.id} className="homepage container bg-primary p-5 rounded-md">
+          <div key={post_data.id} id={post_data.id.toString()} className="homepage container bg-primary p-5 rounded-md">
             <Post post_data={post_data} />
             <InteractPart
               post_id={post_data.id}
