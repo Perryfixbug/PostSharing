@@ -1,3 +1,5 @@
+export const revalidate = 10; // mỗi 10 giây sẽ regenerate 1 lần
+
 import CommentPart from '@/components/comment';
 import InteractPart from '@/components/interact';
 import Post from '@/components/post';
@@ -6,7 +8,7 @@ import { PostType } from '@/type/type';
 import Link from 'next/link';
 
 export default async function Home() {
-  const allPosts = await fetchAPI('/post', 'GET');
+  const allPosts: PostType[] = await fetchAPI('/post', 'GET');
 
   return (
     <div className="container flex flex-col gap-3">

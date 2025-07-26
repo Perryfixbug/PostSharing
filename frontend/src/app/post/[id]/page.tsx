@@ -1,3 +1,5 @@
+export const revalidate = 300; //Regenerate sau 5ph
+
 import CommentPart from '@/components/comment';
 import InteractPart from '@/components/interact';
 import Post from '@/components/post';
@@ -7,7 +9,7 @@ import React from 'react';
 
 const PostDetail = async ({ params }: { params: Promise<{ id: string }> }) => {
   let post_data = null;
-  const {id} = await params
+  const { id } = await params;
 
   try {
     post_data = await fetchAPI(`/post/detail/${id}`);
