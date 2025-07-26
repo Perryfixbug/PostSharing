@@ -2,11 +2,22 @@ import CommentPart from '@/components/comment';
 import InteractPart from '@/components/interact';
 import Post from '@/components/post';
 import { fetchAPI } from '@/lib/api';
+import { notFound } from 'next/navigation';
 import React from 'react';
 
 const PostDetail = async ({ params }: { params: Promise<{ id: string }> }) => {
-  const { id } = await params;
-  const post_data = await fetchAPI(`/post/detail/${id}`);
+  let post_data = null;
+  const {id} = await params
+
+  try {
+    post_data = await fetchAPI(`/post/detail/${id}`);
+  } catch (error) {
+    notFound(); // chuyển sang trang 404
+  }
+
+  if (!post_data) {
+    notFound();
+  }
 
   return (
     <div className="container flex flex-col p-10 space-y-2 bg-primary rounded-md">

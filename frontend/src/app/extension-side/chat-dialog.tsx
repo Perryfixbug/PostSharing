@@ -1,14 +1,9 @@
 'use client';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardHeader,
-  CardContent,
-  CardFooter,
-} from '@/components/ui/card';
+import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/card';
 import { fetchAPI } from '@/lib/api';
-import { CircleSmall,  MessageCircle, Send, X } from 'lucide-react';
+import { CircleSmall, MessageCircle, Send, X } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
 import { UserType, MessageType, Options, newMessageType } from '@/type/type';
 import { Input } from '@/components/ui/input';
@@ -141,15 +136,25 @@ const Chat = ({
             ))}
         </div>
       </CardContent>
-      <CardFooter className="flex gap-2 items-center">
-        <Input
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Type message.."
-        />
-        <Button variant={'ghost'} onClick={handleSendMessage}>
-          <Send />
-        </Button>
+      <CardFooter>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSendMessage();
+          }}
+          className="flex gap-2 items-center w-full"
+        >
+          <Input
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Type message.."
+            autoFocus
+            className="flex-1"
+          />
+          <Button type="submit" variant="ghost">
+            <Send />
+          </Button>
+        </form>
       </CardFooter>
     </Card>
   );
@@ -158,8 +163,8 @@ const Chat = ({
 const Message = ({ user, messageData }: { user: UserType; messageData: MessageType }) => {
   const isMe = messageData.receiver_id === user.id;
   const style = isMe
-    ? 'rounded-full bg-accent w-fit py-1 px-2 self-end'
-    : 'rounded-full bg-muted w-fit py-1 px-2 self-start';
+    ? 'rounded-2xl bg-accent w-fit max-w-[80%] py-1 px-2 self-end'
+    : 'rounded-2xl bg-muted w-fit max-w-[80%] py-1 px-2 self-start';
   return <div className={style}>{messageData.content}</div>;
 };
 

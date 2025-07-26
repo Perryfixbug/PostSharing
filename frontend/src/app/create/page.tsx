@@ -10,6 +10,7 @@ import { fetchAPI } from '@/lib/api';
 import { toast } from 'sonner';
 import { SkeletonCreate } from '@/components/skeletons';
 import AuthFirst from '@/components/auth-first';
+import { useRouter } from 'next/navigation';
 
 type FormValues = {
   title: string;
@@ -19,6 +20,7 @@ type FormValues = {
 const Create = () => {
   const { userInfo, isAuth, authLoading } = useAuth();
   const { register, handleSubmit, reset } = useForm<FormValues>();
+  const router = useRouter()
 
   const onSubmit = async (data: FormValues) => {
     try {
@@ -31,6 +33,7 @@ const Create = () => {
       toast.success('Create post successfully!', {
         description: `New Post #${newPost.title}`,
       });
+      router.replace(`/#${newPost.id}`)
     } catch (err) {
       if (err instanceof Error) {
         toast.error(err.message);
